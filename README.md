@@ -16,4 +16,4 @@
 ## Advice
 
 In Python, the function `print("a text")` prints `a text` on the standard output.
-For further information, (https://docs.python.org/3/library/functions.html#print)[read the doc]!
+For further information, [read the doc](https://docs.python.org/3/library/functions.html#print)!
