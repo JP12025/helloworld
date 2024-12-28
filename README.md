@@ -5,8 +5,9 @@
  - Create a file `hello.py`
  - Write a line to print the message `Hello, world!` on the standard output
  - Save and close `hello.py`
- - Check if the test is ok (only 1 test) with command `./check hello.py`
-
+ - Check if the test is ok (only 1 test) with command `./check [-v] hello.py`
+ - `-v` option gives the difference between what is expected and what your script prints
+  
 > [!TIP]
 > In Python, the function `print("a text")` prints `a text` on the standard output.
 > For further information, [read the doc](https://docs.python.org/3/library/functions.html#print)!
