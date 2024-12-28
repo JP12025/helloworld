@@ -14,11 +14,11 @@
 
 During the first session
 
-# How to test
+# How to Test
 
 - Test your script with command `./check [-v] hello.py`
 - `-v` option gives the difference between what is expected and what your script prints
   
-# How to submit
+# How to Submit
 
-Once you're done with all tasks, submit your python files on Moodle
+Once you're done with all tasks, submit all your python files on Moodle
