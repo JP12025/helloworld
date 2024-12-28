@@ -8,7 +8,9 @@ Red='\033[0;31m'
 Color_Off='\033[0m' 
 Green='\033[0;32m'
 
+##################################################
 # check command line params
+##################################################
 VERBOSE="False"
 GIVEN_SCRIPT=""
 if [ $# -eq 1 ]
@@ -61,8 +63,9 @@ then
 fi
 
 ##################################################
-# Run test 01
+# Run tests
 ##################################################
+NB_OK=0
 TEST_NAME="Hello, world!"
 TEST_NUM="01"
 TEST_OUT=".test/result_test.out"
@@ -76,6 +79,7 @@ then
     echo "${TEST_NUM} ${Green}\xE2\x9C\x94${Color_Off} ${TEST_NAME}"
     rm ${TEST_OUT}
     rm ${TEST_DIFF}
+    NB_OK=$((NB_OK+1))
 else
     echo "${TEST_NUM} ${Red}\xE2\x9C\x97${Color_Off} ${TEST_NAME}"
     if [ "${VERBOSE}" = "True" ]
@@ -86,3 +90,5 @@ else
         grep ">" ${TEST_DIFF}
     fi
 fi
+
+echo "${NB_OK}/1"
