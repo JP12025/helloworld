@@ -1,4 +1,7 @@
 #! /usr/bin/env sh
+Red='\033[0;31m'
+Color_Off='\033[0m' 
+Green='\033[0;32m'
 
 # Check if python is available
 pyapp=`which python`
@@ -27,5 +30,16 @@ fi
 
 # Run tests
 python hello.py > .test/hello.out
-diff .test/exp01.txt .test/hello.out
+diff .test/exp01.txt .test/hello.out > .test/d01.out
+nb01=`cat .test/d01.out | wc -l`
 rm .test/hello.out
+if [ ${nb01} -eq 0 ]
+then
+    echo "  ${Green}\xE2\x9C\x94${Color_Off} Test 1"
+else
+    echo "  ${Red}\xE2\x9C\x97${Color_Off} Test 1"
+    echo "Expected"
+    grep "<" .test/d01.out
+    echo "Given"
+    grep ">" .test/d01.out
+fi
