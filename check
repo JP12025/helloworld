@@ -1,0 +1,10 @@
+#! /usr/bin/env sh
+
+if [ -f "hello.py" ]
+then
+    python hello.py > .test/hello.out
+    diff .test/exp01.txt .test/hello.out
+    rm .test/hello.out
+else
+    echo "File not found: hello.py"
+fi
