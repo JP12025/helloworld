@@ -1,9 +1,38 @@
 #! /usr/bin/env sh
+
+# File to test
+EXP_SCRIPT="hello.py"
+
+# Text colors
 Red='\033[0;31m'
 Color_Off='\033[0m' 
 Green='\033[0;32m'
 
+# check command line params
+VERBOSE="False"
+GIVEN_SCRIPT=""
+if [ $# -eq 1 ]
+then
+    GIVEN_SCRIPT="${1}"
+fi
+
+if [ $# -eq 2 ]
+then
+    if [ "${1}" = "-v" ]
+    then
+        VERBOSE="True"
+        GIVEN_SCRIPT="${2}"
+    fi
+    if [ "${2}" = "-v" ]
+    then
+        VERBOSE="True"
+        GIVEN_SCRIPT="${1}"
+    fi
+fi
+
+##################################################
 # Check if python is available
+##################################################
 pyapp=`which python`
 if [ "${pyapp:0:1}" == "/" ]
 then
@@ -13,33 +42,47 @@ else
     exit
 fi
 
+##################################################
 # Check if the script has been given
-script=$1
-if [ -z "${1}" ]
+##################################################
+if [ "${GIVEN_SCRIPT}" != "${EXP_SCRIPT}" ]
 then
-    echo "No python script specified"
+    echo "Script ${EXP_SCRIPT} is not in command line"
     exit
 fi
 
+##################################################
 # Check if the given script exists
-if [ ! -f "${script}" ]
+##################################################
+if [ ! -f "${EXP_SCRIPT}" ]
 then
-    echo "File not found: ${script}"
+    echo "File not found: ${EXP_SCRIPT}"
     exit
 fi
 
-# Run tests
-python hello.py > .test/hello.out
-diff .test/exp01.txt .test/hello.out > .test/d01.out
-nb01=`cat .test/d01.out | wc -l`
-rm .test/hello.out
-if [ ${nb01} -eq 0 ]
+##################################################
+# Run test 01
+##################################################
+TEST_NAME="Hello, world!"
+TEST_NUM="01"
+TEST_OUT=".test/result_test.out"
+TEST_DIFF=".test/diff_test.out"
+python ${EXP_SCRIPT} > ${TEST_OUT}
+diff .test/exp01.txt ${TEST_OUT} > ${TEST_DIFF}
+NB_DIFF=`cat ${TEST_DIFF} | wc -l`
+
+if [ ${NB_DIFF} -eq 0 ]
 then
-    echo "  ${Green}\xE2\x9C\x94${Color_Off} Test 1"
+    echo "${TEST_NUM} ${Green}\xE2\x9C\x94${Color_Off} ${TEST_NAME}"
+    rm ${TEST_OUT}
+    rm ${TEST_DIFF}
 else
-    echo "  ${Red}\xE2\x9C\x97${Color_Off} Test 1"
-    echo "Expected"
-    grep "<" .test/d01.out
-    echo "Given"
-    grep ">" .test/d01.out
+    echo "${TEST_NUM} ${Red}\xE2\x9C\x97${Color_Off} ${TEST_NAME}"
+    if [ "${VERBOSE}" = "True" ]
+    then
+        echo "${Green}Expected${Color_Off}"
+        grep "<" ${TEST_DIFF}
+        echo "${Red}Given${Color_Off}"
+        grep ">" ${TEST_DIFF}
+    fi
 fi
