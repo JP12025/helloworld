@@ -1,10 +1,31 @@
 #! /usr/bin/env sh
 
-if [ -f "hello.py" ]
+# Check if python is available
+pyapp=`which python`
+if [ "${pyapp:0:1}" == "/" ]
 then
-    python hello.py > .test/hello.out
-    diff .test/exp01.txt .test/hello.out
-    rm .test/hello.out
+    python --version
 else
-    echo "File not found: hello.py"
+    echo "Python not found"
+    exit
 fi
+
+# Check if the script has been given
+script=$1
+if [ -z "${1}" ]
+then
+    echo "No python script specified"
+    exit
+fi
+
+# Check if the given script exists
+if [ ! -f "${script}" ]
+then
+    echo "File not found: ${script}"
+    exit
+fi
+
+# Run tests
+python hello.py > .test/hello.out
+diff .test/exp01.txt .test/hello.out
+rm .test/hello.out
