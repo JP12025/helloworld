@@ -1,5 +1,7 @@
 # Hello, world!
 
+[A conversation with Dr. Brian Kernighan, creator of “hello, world”](https://www.youtube.com/watch?v=ufB53UE2Cvo)
+
 # What to Do
 
 - Create a file `hello.py`
